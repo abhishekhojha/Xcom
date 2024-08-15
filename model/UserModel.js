@@ -37,9 +37,9 @@ const userSchema = new mongoose.Schema({
             },
             message: 'Password must be at least 7 characters long and include letters, numbers, and at least one special character'
         }
-    },
-    timestamps:true
-})
+    }
+},
+    { timestamps: true })
 userSchema.pre("save", function (next) {
     const user = this
     if (!user.isModified("password")) return next()
@@ -56,7 +56,7 @@ userSchema.methods.comparePassword = function (password, cb) {
     })
 }
 userSchema.methods.generateToken = function () {
-    const token = jwt.sign({"id":this._id},SecretToken,{expiresIn:86400});
+    const token = jwt.sign({ "id": this._id }, SecretToken, { expiresIn: 86400 });
     return token;
 }
 module.exports = mongoose.model("User", userSchema)

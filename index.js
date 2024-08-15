@@ -4,8 +4,10 @@ const cors = require("cors")
 require("dotenv").config()
 const PORT = 3000
 const DB = require("mongoose")
+const userRoute = require("./routes/UserRoute")
 const DBURL = process.env.DBURL
 app.use(cors())
+app.use(express.json())
 async function DBConnect(){
     await DB.connect(DBURL)
 }
@@ -14,6 +16,7 @@ DBConnect().then((res)=>{
 }).catch((err)=>{
     console.log(err)
 })
+app.use("/api/users",userRoute)
 app.get("/",(req,res)=>{
     res.send("Hello World!")
 })
