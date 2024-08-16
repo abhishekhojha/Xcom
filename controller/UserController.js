@@ -41,4 +41,14 @@ async function Login(req, res) {
         return res.status(409).json({ message: error.message });
     }
 }
-module.exports = { UserRegister, Login }
+async function GetUsers(req,res){
+    try {
+        const users = await User.find({});
+        if(!users)
+            return res.status(404).json({message:"Users not found"})
+        return res.status(201).json({message:"Users fetch succesfully",data:users})
+    } catch (error) {
+        return res.status(409).json({message:error.message})
+    }
+}
+module.exports = { UserRegister, Login, GetUsers }
